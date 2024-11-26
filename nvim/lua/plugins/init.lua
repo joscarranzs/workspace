@@ -29,4 +29,5 @@ require("lazy").setup({
     require("plugins.configs.nvim-db"),
     require("plugins.configs.nvim-jbtls"),
     require("plugins.configs.cmp"),
+    require("plugins.configs.nvim-animate"),
 })

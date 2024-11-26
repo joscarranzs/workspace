@@ -10,6 +10,11 @@ return {
             "rcarriga/nvim-notify", -- Notificaciones avanzadas
         },
         config = function()
+            -- Configuración del plugin nvim-notify
+            require("notify").setup({
+                timeout = 500, -- Tiempo de espera para mostrar la notificación
+            })
+
             -- Configuración principal de noice.nvim
             require("noice").setup({
                 -- Configuración de la línea de comandos

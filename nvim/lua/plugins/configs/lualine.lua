@@ -1,40 +1,34 @@
--- Archivo: lualine.lua
--- Configuración de lualine.nvim con separadores elegantes.
-
+-- statusline configuration
 return {
-    "nvim-lualine/lualine.nvim", -- Plugin para la barra de estado
-    dependencies = { "nvim-tree/nvim-web-devicons", opt = true }, -- Opcional: soporte para íconos
-    config = function()
-        require("lualine").setup({
-            options = {
-                theme = "auto", -- Usa el tema actual
-                component_separators = { left = "", right = "" }, -- Separadores entre componentes
-                section_separators = { left = "", right = "" }, -- Separadores entre secciones
-                disabled_filetypes = { -- Archivos donde no se mostrará lualine
-                    statusline = {},
-                    winbar = {},
-                },
-                always_divide_middle = true,
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+        -- Cargar colores de Rose Pine
+        local rosepine_colors = require("rose-pine.palette")
+        if not rosepine_colors then
+            return
+        end
+
+        -- Tema bubbles basado en Rose Pine
+        local bubbles_theme = {
+            normal = {
+                a = { fg = rosepine_colors.base, bg = "#EBBCBA" }, -- Cambiado a #EBBCBA
+                b = { fg = rosepine_colors.text, bg = rosepine_colors.overlay },
+                c = { fg = rosepine_colors.text, bg = rosepine_colors.surface },
             },
-            sections = {
-                lualine_a = { "mode" }, -- Modo actual (normal, insert, etc.)
-                lualine_b = { "branch", "diff", "diagnostics" }, -- Rama de Git, diferencias, diagnósticos
-                lualine_c = { "filename" }, -- Nombre del archivo
-                lualine_x = { "encoding", "fileformat", "filetype" }, -- Codificación y tipo de archivo
-                lualine_y = { "progress" }, -- Progreso del archivo
-                lualine_z = { "location" }, -- Posición del cursor
+            insert = { a = { fg = rosepine_colors.base, bg = rosepine_colors.iris } },
+            visual = { a = { fg = rosepine_colors.base, bg = rosepine_colors.pine } },
+            replace = { a = { fg = rosepine_colors.base, bg = rosepine_colors.love } },
+            inactive = {
+                a = { fg = rosepine_colors.text, bg = rosepine_colors.surface },
+                b = { fg = rosepine_colors.text, bg = rosepine_colors.surface },
+                c = { fg = rosepine_colors.text, bg = rosepine_colors.base },
             },
-            inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = { "filename" },
-                lualine_x = { "location" },
-                lualine_y = {},
-                lualine_z = {},
-            },
-            tabline = {}, -- Configuración para la barra de pestañas (opcional)
-            winbar = {}, -- Configuración para la barra de ventanas (opcional)
-            extensions = {}, -- Extensiones opcionales (por ejemplo: nvim-tree, quickfix)
-        })
+        }
+
+        -- Configuración de lualine
+        opts.options = opts.options or {}
+        opts.options.theme = bubbles_theme
+        opts.options.section_separators = { left = "", right = "" }
+        opts.options.component_separators = ""
     end,
 }

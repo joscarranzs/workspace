@@ -3,18 +3,15 @@ return {
     config = function()
         require("transparent").setup({
             enable = true, -- Habilita la transparencia automáticamente
-            extra_groups = { -- Grupos adicionales para la transparencia
+            extra_groups = {
                 "Normal",
-                "NormalNC",
                 "NormalFloat",
                 "TelescopePrompt",
                 "TelescopeResults",
-                "TelescopePreview",
                 "Pmenu",
                 "PmenuSel",
                 "StatusLine",
                 "DiagnosticFloat",
-                "FloatBorder",
             },
         })
 

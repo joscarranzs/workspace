@@ -45,8 +45,8 @@ vim.api.nvim_set_keymap("n", "<Leader>O", "O<Esc>0D", { noremap = true, silent =
 
 -- Nueva pestaña
 vim.api.nvim_set_keymap("n", "te", ":Telescope find_files<CR>:tabedit<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<tab>", ":tabnext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<s-tab>", ":tabprev<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Tab>", ":BufferLineCycleNext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { noremap = true, silent = true })
 
 -- Mapeos de teclas para redimensionar ventanas más significativamente usando combinaciones con la tecla líder
 vim.api.nvim_set_keymap("n", "<leader>rl", "5<C-w><", { noremap = true, silent = true }) -- Redimensionar ventana hacia la izquierda más
