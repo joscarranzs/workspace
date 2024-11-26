@@ -42,3 +42,58 @@ vim.api.nvim_set_keymap("n", "<Leader>o", "o<Esc>0D", { noremap = true, silent =
 
 -- Mapear <Leader>O para insertar una nueva línea limpia arriba sin entrar en modo insert
 vim.api.nvim_set_keymap("n", "<Leader>O", "O<Esc>0D", { noremap = true, silent = true })
+
+-- Nueva pestaña
+vim.api.nvim_set_keymap("n", "te", ":tabedit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<tab>", ":tabnext<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<s-tab>", ":tabprev<CR>", { noremap = true, silent = true })
+
+-- Mapeos de teclas para redimensionar ventanas más significativamente usando combinaciones con la tecla líder
+vim.api.nvim_set_keymap("n", "<leader>rl", "5<C-w><", { noremap = true, silent = true }) -- Redimensionar ventana hacia la izquierda más
+vim.api.nvim_set_keymap("n", "<leader>rr", "5<C-w>>", { noremap = true, silent = true }) -- Redimensionar ventana hacia la derecha más
+vim.api.nvim_set_keymap("n", "<leader>rt", "5<C-w>+", { noremap = true, silent = true }) -- Redimensionar ventana hacia arriba más
+vim.api.nvim_set_keymap("n", "<leader>rd", "5<C-w>-", { noremap = true, silent = true }) -- Redimensionar ventana hacia abajo más
+
+-- Mapeos de teclas para moverse entre ventanas usando combinaciones con la tecla líder
+vim.api.nvim_set_keymap("n", "<leader>ml", "<C-w>h", { noremap = true, silent = true }) -- Moverse a la ventana de la izquierda
+vim.api.nvim_set_keymap("n", "<leader>mr", "<C-w>l", { noremap = true, silent = true }) -- Moverse a la ventana de la derecha
+vim.api.nvim_set_keymap("n", "<leader>mt", "<C-w>k", { noremap = true, silent = true }) -- Moverse a la ventana superior
+vim.api.nvim_set_keymap("n", "<leader>md", "<C-w>j", { noremap = true, silent = true }) -- Moverse a la ventana inferior
+
+-- Función para abrir un split vertical y lanzar Telescope para buscar archivos
+function OpenVerticalSplitWithTelescope()
+    vim.cmd("vsplit") -- Abrir un split vertical
+    vim.cmd("Telescope find_files") -- Ejecutar Telescope para buscar archivos
+end
+
+-- Función para abrir un split horizontal y lanzar Telescope para buscar archivos
+function OpenHorizontalSplitWithTelescope()
+    vim.cmd("split") -- Abrir un split horizontal
+    vim.cmd("Telescope find_files") -- Ejecutar Telescope para buscar archivos
+end
+
+-- Asignar las funciones a combinaciones de teclas personalizadas
+vim.api.nvim_set_keymap(
+    "n",
+    "<leader>vs",
+    ":lua OpenVerticalSplitWithTelescope()<CR>", -- Llama a la función para split vertical y Telescope
+    { noremap = true, silent = true } -- Configuración: sin mapeos recursivos y silencioso
+)
+vim.api.nvim_set_keymap(
+    "n",
+    "<leader>hs",
+    ":lua OpenHorizontalSplitWithTelescope()<CR>", -- Llama a la función para split horizontal y Telescope
+    { noremap = true, silent = true } -- Configuración: sin mapeos recursivos y silencioso
+)
+
+-- Mover ventana hacia la derecha
+vim.keymap.set("n", "<leader>pL", "<C-w>L", { desc = "Mover ventana hacia la derecha" })
+
+-- Mover ventana hacia la izquierda
+vim.keymap.set("n", "<leader>pR", "<C-w>H", { desc = "Mover ventana hacia la izquierda" })
+
+-- Mover ventana hacia abajo
+vim.keymap.set("n", "<leader>pD", "<C-w>J", { desc = "Mover ventana hacia abajo" })
+
+-- Mover ventana hacia arriba
+vim.keymap.set("n", "<leader>pT", "<C-w>K", { desc = "Mover ventana hacia arriba" })
