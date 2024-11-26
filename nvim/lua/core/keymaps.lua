@@ -44,7 +44,7 @@ vim.api.nvim_set_keymap("n", "<Leader>o", "o<Esc>0D", { noremap = true, silent =
 vim.api.nvim_set_keymap("n", "<Leader>O", "O<Esc>0D", { noremap = true, silent = true })
 
 -- Nueva pestaña
-vim.api.nvim_set_keymap("n", "te", ":tabedit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "te", ":Telescope find_files<CR>:tabedit<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<tab>", ":tabnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<s-tab>", ":tabprev<CR>", { noremap = true, silent = true })
 
@@ -97,3 +97,6 @@ vim.keymap.set("n", "<leader>pD", "<C-w>J", { desc = "Mover ventana hacia abajo"
 
 -- Mover ventana hacia arriba
 vim.keymap.set("n", "<leader>pT", "<C-w>K", { desc = "Mover ventana hacia arriba" })
+
+-- Cerrar el buffer actual sin cerrar la ventana
+vim.api.nvim_set_keymap("n", "<leader>bd", ":bdelete<CR>", { noremap = true, silent = true })

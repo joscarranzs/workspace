@@ -21,6 +21,7 @@ require("lazy").setup({
     require("plugins.configs.lualine"),
     require("plugins.configs.supermaven"),
     require("plugins.configs.telescope"),
+    require("plugins.configs.bufferline"),
     require("plugins.configs.noice"),
     require("plugins.configs.dashboard"),
     require("plugins.configs.oil"),
