@@ -6,9 +6,11 @@ return {
         require("rose-pine").setup({
             variant = "moon",
             disable_italics = true,
+            disable_background = true, -- Desactiva el fondo predeterminado
         })
-        -- Establecer un fondo específico para rose-pine si es necesario
-        vim.cmd("highlight Normal guibg=#1e1e2e")
+        -- Elimina cualquier sobrescritura manual del fondo
+        vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
+        vim.cmd("highlight NormalFloat guibg=NONE ctermbg=NONE")
         vim.cmd("colorscheme rose-pine")
     end,
 }

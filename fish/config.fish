@@ -13,6 +13,8 @@ alias lg='lazygit'
 alias create="mkdir"
 alias delete="rm -rf"
 alias back="cd .."
+alias tm="tmux"
+alias kill="tmux kill-server"
 command -qv nvim && alias vim nvim
 
 # Evaluate Homebrew env only if it exists
