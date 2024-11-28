@@ -18,6 +18,7 @@ require("lazy").setup({
     require("plugins.configs.transparent"),
     require("plugins.configs.lsp"),
     require("plugins.configs.nvim-treesitter"),
+    require("plugins.configs.vim-tmux-navigator"),
     require("plugins.configs.lualine"),
     require("plugins.configs.supermaven"),
     require("plugins.configs.telescope"),
@@ -30,4 +31,5 @@ require("lazy").setup({
     require("plugins.configs.nvim-jbtls"),
     require("plugins.configs.cmp"),
     require("plugins.configs.nvim-animate"),
+    require("plugins.configs.vim-translate"),
 })

@@ -12,7 +12,7 @@ return {
         config = function()
             -- Configuración del plugin nvim-notify
             require("notify").setup({
-                timeout = 500, -- Tiempo de espera para mostrar la notificación
+                timeout = 1000, -- Tiempo de espera para mostrar la notificación
             })
 
             -- Configuración principal de noice.nvim

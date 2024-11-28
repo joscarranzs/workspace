@@ -1,5 +1,3 @@
--- ~/.config/nvim/lua/plugins/configs/dashboard.lua
-
 return {
     {
         "nvimdev/dashboard-nvim",
@@ -7,7 +5,7 @@ return {
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
             require("dashboard").setup({
-                theme = "hyper", -- O "doom" según tu preferencia
+                theme = "hyper",
                 config = {
                     header = {
                         "███╗   ███╗██████╗          ██╗",
@@ -18,21 +16,54 @@ return {
                         "╚═╝     ╚═╝╚═╝  ╚═╝     ╚════╝ ",
                         "                               ",
                     },
-                    center = {
+                    shortcut = {
                         {
-                            icon = "  ", -- Eliminar el ícono
                             desc = "Find File",
-                            action = "Telescope find_files",
+                            group = "DashboardShortcut", -- Grupo de resaltado, puedes ajustarlo como prefieras
                             key = "f",
+                            action = "Telescope find_files",
                         },
                         {
-                            icon = "  ", -- Eliminar el ícono
+                            desc = "New File",
+                            group = "DashboardShortcut",
+                            key = "n",
+                            action = "enew",
+                        },
+                        {
+                            desc = "Recent Files",
+                            group = "DashboardShortcut",
+                            key = "r",
+                            action = "Telescope oldfiles",
+                        },
+                        {
                             desc = "Find Text",
+                            group = "DashboardShortcut",
+                            key = "g",
                             action = "Telescope live_grep",
-                            key = "t",
+                        },
+                        {
+                            desc = "Config",
+                            group = "DashboardShortcut",
+                            key = "c",
+                            action = "e ~/.config/nvim/init.lua",
                         },
                     },
-                    footer = {}, -- Eliminar el pie de página
+                    packages = { enable = true },
+                    project = {
+                        enable = true,
+                        limit = 8,
+                        icon = "📂",
+                        label = " Projects",
+                        action = "Telescope find_files cwd=",
+                    },
+                    mru = {
+                        enable = true,
+                        limit = 10,
+                        icon = "🕒",
+                        label = " Recent",
+                        cwd_only = false,
+                    },
+                    footer = { "Press key to execute command" }, -- Pie de página con una instrucción
                 },
             })
         end,

@@ -100,3 +100,66 @@ vim.keymap.set("n", "<leader>pT", "<C-w>K", { desc = "Mover ventana hacia arriba
 
 -- Cerrar el buffer actual sin cerrar la ventana
 vim.api.nvim_set_keymap("n", "<leader>bd", ":bdelete<CR>", { noremap = true, silent = true })
+
+-- Mapeo para traducir texto seleccionado en modo visual
+vim.keymap.set('v', '<leader>t', ':Translate<CR>', { noremap = true, silent = true, desc = 'Traducir texto seleccionado' })
+
+-- Asignación de teclas para traducir y reemplazar texto seleccionado
+vim.keymap.set('v', '<leader>tw', ':TranslateW<CR>', { noremap = true, silent = true, desc = 'Traducir y reemplazar texto seleccionado' })
+
+-- Mapeo para ejecutar ':TranslateR' en el rango visual
+vim.keymap.set('v', '<leader>tr', ":'<,'>TranslateR<CR>", { noremap = true, silent = true, desc = 'Traducir y reemplazar texto seleccionado' })
+
+-- Mapeo para ejecutar ':TranslateW' en el rango visual sin reemplazar el texto seleccionado
+vim.keymap.set('v', '<leader>tw', ":'<,'>TranslateW<CR>", { noremap = true, silent = true, desc = 'Traducir texto seleccionado sin reemplazar' })
+
+-- Función para convertir solo el texto seleccionado en CamelCase
+function camel_case_selected_text()
+    local start_pos = vim.fn.getpos("'<")
+    local end_pos = vim.fn.getpos("'>")
+    local line_start, col_start = start_pos[2], start_pos[3]
+    local line_end, col_end = end_pos[2], end_pos[3]
+
+    -- Verifica que haya texto seleccionado
+    if line_start == 0 or line_end == 0 then
+        print("No text selected!")
+        return
+    end
+
+    -- Caso: Selección en una sola línea
+    if line_start == line_end then
+        local line = vim.fn.getline(line_start) -- Obtiene la línea completa
+        local selected_text = line:sub(col_start, col_end) -- Extrae el texto seleccionado
+        local cleaned_text = selected_text:gsub("%s+", " ") -- Elimina espacios extra
+        local camel_cased = cleaned_text:gsub(" (%a)", function(letter)
+            return letter:upper()
+        end):gsub("^%l", string.lower) -- Aplica CamelCase
+        -- Reemplaza el texto seleccionado
+        vim.api.nvim_buf_set_text(0, line_start - 1, col_start - 1, line_end - 1, col_end, { camel_cased })
+    else
+        -- Caso: Selección en varias líneas
+        local lines = vim.fn.getline(line_start, line_end) -- Obtiene las líneas seleccionadas
+        lines[1] = lines[1]:sub(col_start) -- Ajusta la primera línea desde col_start
+        lines[#lines] = lines[#lines]:sub(1, col_end) -- Ajusta la última línea hasta col_end
+        local selected_text = table.concat(lines, " ") -- Une las líneas seleccionadas
+        local cleaned_text = selected_text:gsub("%s+", " ") -- Elimina espacios extra
+        local camel_cased = cleaned_text:gsub(" (%a)", function(letter)
+            return letter:upper()
+        end):gsub("^%l", string.lower) -- Aplica CamelCase
+        -- Reemplaza las líneas seleccionadas
+        vim.api.nvim_buf_set_text(0, line_start - 1, col_start - 1, line_end - 1, col_end, { camel_cased })
+    end
+end
+
+-- Atajo de teclado en modo visual para ejecutar la función
+vim.api.nvim_set_keymap("v", "<leader>cc", ":lua camel_case_selected_text()<CR>", { noremap = true, silent = true })
+
+-- Alternativa para cerrar los buffer
+vim.api.nvim_create_user_command(
+    'Q',
+    'bp|bd #',
+    { desc = 'Cerrar el buffer actual sin salir de Neovim' }
+)
+
+-- Mapear :q al comando personalizado :Q
+vim.cmd('cabbrev q Q')
