@@ -13,22 +13,30 @@ return {
             "DBUIFindBuffer",
         },
         init = function()
+            -- Configuración inicial
             vim.g.db_ui_use_nerd_fonts = 1
             vim.g.dbs = {
                 test = "mysql://jcarranz@localhost/test",
             }
-            vim.g.db_ui_save_location = "~/.config/nvim/db_ui_queries"
+            vim.g.db_ui_save_location = "~/mysql-workspace"
 
-            -- Asegurar limpieza de buffers de DBUI y resultados
+            -- Limpieza de buffers de DBUI y SQL
             vim.cmd([[
-                autocmd FileType dbui,dbout,sql setlocal bufhidden=wipe
-                ]])
+            autocmd FileType dbui,dbout,sql setlocal bufhidden=delete
+            autocmd FileType dbui,dbout,sql setlocal modifiable
+            autocmd FileType sql setlocal commentstring=--\ %s
+            ]])
         end,
         config = function()
-            -- Este bloque elimina buffers vacíos "[No Name]" automáticamente
+            -- Auto-eliminación de buffers vacíos
             vim.cmd([[
-                autocmd BufEnter * if &ft == '' && bufname() == '' | bwipeout | endif
-                ]])
+            autocmd BufEnter * if &ft == '' && bufname() == '' && winnr('$') > 1 | bwipeout | endif
+            ]])
+
+            -- Configuración de completado para Dadbod
+            vim.cmd([[
+            autocmd FileType sql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
+            ]])
         end,
     },
 }
