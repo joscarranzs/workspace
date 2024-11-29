@@ -24,6 +24,11 @@ return {
             autocmd FileType dbui,dbout,sql setlocal bufhidden=delete
             autocmd FileType dbui,dbout,sql setlocal modifiable
             ]])
+
+            -- Configuración de comentarios para archivos SQL y similares
+            vim.cmd([[
+            autocmd FileType dbui,dbout,sql setlocal commentstring=--\ %s
+            ]])
         end,
         config = function()
             -- Función para cerrar buffers vacíos
@@ -40,6 +45,11 @@ return {
             vim.cmd([[
             autocmd BufEnter * if &ft == 'dbout' | call HandleEmptyBuffers() | endif
             autocmd BufWritePost *.sql if &ft == 'dbout' | call HandleEmptyBuffers() | endif
+            ]])
+
+            -- Configuración de completado para Dadbod
+            vim.cmd([[
+            autocmd FileType sql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
             ]])
         end,
     },
