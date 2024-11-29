@@ -35,4 +35,5 @@ require("lazy").setup({
     require("plugins.configs.which-key"),
     require("plugins.configs.vim-translate"),
     require("plugins.configs.nvim-colorizer"),
+    require("plugins.configs.fzf"),
 })
