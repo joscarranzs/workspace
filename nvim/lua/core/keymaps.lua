@@ -31,6 +31,9 @@ vim.api.nvim_set_keymap("n", "<leader>q", ":q<CR>", { noremap = true, silent = t
 vim.api.nvim_set_keymap("n", "<leader>x", ":wq<CR>", { noremap = true, silent = true }) -- Guardar y salir
 vim.api.nvim_set_keymap("n", "<leader>Q", ":qa!<CR>", { noremap = true, silent = true }) -- Salir sin guardar
 
+-- Mapeo para refresh de DBUI
+vim.api.nvim_set_keymap('n', 'R', '<Plug>(DBUI_Refresh)', { noremap = true, silent = true })
+
 -- Asignaciones de teclas para Telescope
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { noremap = true, silent = true, desc = "Buscar archivos" })
 vim.api.nvim_set_keymap("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true, desc = "Buscar texto en archivos" })

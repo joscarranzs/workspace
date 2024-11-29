@@ -14,42 +14,26 @@ return {
         },
         init = function()
             vim.g.db_ui_use_nerd_fonts = 1
+            vim.g.db_ui_save_location = "~/mysql-workspace"
             vim.g.dbs = {
                 test = "mysql://jcarranz@localhost/test",
             }
-            vim.g.db_ui_save_location = "~/mysql-workspace"
 
-            -- Limpieza de buffers innecesarios
-            vim.cmd([[
-            autocmd FileType dbui,dbout,sql setlocal bufhidden=delete
-            autocmd FileType dbui,dbout,sql setlocal modifiable
-            ]])
+            -- Agregar los iconos personalizados
+            vim.g.db_ui_icons = {
+                expanded = '▾',
+                collapsed = '▸',
+                saved_query = '*',
+                new_query = '+',
+                tables = '~',
+                buffers = '»',
+                connection_ok = '✓',
+                connection_error = '✕',
+            }
 
             -- Configuración de comentarios para archivos SQL y similares
             vim.cmd([[
             autocmd FileType dbui,dbout,sql setlocal commentstring=--\ %s
-            ]])
-        end,
-        config = function()
-            -- Función para cerrar buffers vacíos
-            vim.cmd([[
-            function! HandleEmptyBuffers()
-            " Si el buffer está vacío, ciérralo automáticamente
-            if line('$') == 1 && getline(1) == ''
-            silent! execute "bdelete!"
-            endif
-            endfunction
-            ]])
-
-            -- Autocomando para manejar buffers después de escribir o abrir
-            vim.cmd([[
-            autocmd BufEnter * if &ft == 'dbout' | call HandleEmptyBuffers() | endif
-            autocmd BufWritePost *.sql if &ft == 'dbout' | call HandleEmptyBuffers() | endif
-            ]])
-
-            -- Configuración de completado para Dadbod
-            vim.cmd([[
-            autocmd FileType sql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
             ]])
         end,
     },
