@@ -56,7 +56,7 @@ return {
         })
 
         -- Función para alternar variantes del tema
-        local current_variant = "moon"
+        local current_variant = "main"
         function ToggleRosePineVariant()
             current_variant = current_variant == "moon" and "main" or "moon"
             require("rose-pine").setup({ variant = current_variant })
