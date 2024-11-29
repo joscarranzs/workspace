@@ -72,4 +72,3 @@ vim.opt.guicursor = {
     "r-cr:hor20", -- Replace y command-line replace: subrayado
     "o:hor50", -- Operator-pending: subrayado
 }
-

@@ -1,5 +1,5 @@
 return {
-    "tpope/vim-dadbod", -- Modern database interface for Vim
+    "tpope/vim-dadbod",
     {
         "kristijanhusak/vim-dadbod-ui",
         dependencies = {
@@ -13,13 +13,22 @@ return {
             "DBUIFindBuffer",
         },
         init = function()
-            -- DBUI configuration
             vim.g.db_ui_use_nerd_fonts = 1
-
-            -- Configuración de la base de datos MySQL en vim-dadbod
             vim.g.dbs = {
-                test = "mysql://jcarranz@localhost/test", -- Única base de datos configurada
+                test = "mysql://jcarranz@localhost/test",
             }
+            vim.g.db_ui_save_location = "~/.config/nvim/db_ui_queries"
+
+            -- Asegurar limpieza de buffers de DBUI y resultados
+            vim.cmd([[
+                autocmd FileType dbui,dbout,sql setlocal bufhidden=wipe
+                ]])
+        end,
+        config = function()
+            -- Este bloque elimina buffers vacíos "[No Name]" automáticamente
+            vim.cmd([[
+                autocmd BufEnter * if &ft == '' && bufname() == '' | bwipeout | endif
+                ]])
         end,
     },
 }

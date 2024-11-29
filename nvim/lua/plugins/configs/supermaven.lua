@@ -1,8 +1,9 @@
--- ~/.config/nvim/lua/plugins/supermaven.lua
+-- File: nvim/lua/plugins/configs/supermaven.lua
 
 return {
     {
         "supermaven-inc/supermaven-nvim", -- Repositorio correcto de SuperMaven en GitHub
+        lazy = false, -- Asegura que el plugin siempre se cargue al iniciar
         config = function()
             require("supermaven-nvim").setup({
                 -- Configuración personalizada para SuperMaven

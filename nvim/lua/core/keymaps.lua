@@ -163,3 +163,30 @@ vim.api.nvim_create_user_command(
 
 -- Mapear :q al comando personalizado :Q
 vim.cmd('cabbrev q Q')
+
+-- Comando personalizado para cerrar todos los buffers y abrir el Dashboard
+vim.api.nvim_create_user_command(
+    'QA',
+    -- 'bufdo bd' cierra todos los buffers abiertos.
+    -- Luego se ejecuta ':Dashboard' para volver al Dashboard.
+    'bufdo bd | Dashboard',
+    { desc = 'Cerrar todos los buffers y regresar al Dashboard' } -- Descripción del comando
+)
+
+-- Mapear el comando ':qa' al nuevo comando ':QA'
+-- Esto asegura que cuando escribas ':qa', se ejecute nuestro comando personalizado.
+vim.cmd('cabbrev qa QA')
+
+-- Resaltar coincidencias de búsqueda
+vim.opt.hlsearch = true    -- Resaltar coincidencias de búsqueda
+vim.opt.incsearch = true   -- Resaltar incrementalmente mientras escribes en la búsqueda
+vim.opt.ignorecase = true  -- Ignorar mayúsculas/minúsculas al buscar
+vim.opt.smartcase = true   -- Respeta mayúsculas si las usas en la búsqueda
+
+-- Para desactivar el resaltado después de terminar con una búsqueda
+vim.api.nvim_set_keymap('n', '<leader>n', ':nohlsearch<CR>', { noremap = true, silent = true })
+
+-- Comando personalizado para alternar el resaltado manualmente
+vim.cmd([[
+command! ToggleHlsearch set hlsearch!
+]])

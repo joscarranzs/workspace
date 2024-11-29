@@ -25,6 +25,7 @@ require("lazy").setup({
     require("plugins.configs.bufferline"),
     require("plugins.configs.noice"),
     require("plugins.configs.dashboard"),
+    require("plugins.configs.harpoon"),
     require("plugins.configs.oil"),
     require("plugins.configs.muilti-cursors"),
     require("plugins.configs.nvim-db"),
@@ -33,4 +34,5 @@ require("lazy").setup({
     require("plugins.configs.nvim-animate"),
     require("plugins.configs.which-key"),
     require("plugins.configs.vim-translate"),
+    require("plugins.configs.nvim-colorizer"),
 })
