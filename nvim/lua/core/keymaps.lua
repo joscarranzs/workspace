@@ -4,13 +4,24 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Crear y registrar una función para eliminar caracteres molestos e indentar sin mover el cursor
+-- Función para limpiar y formatear archivos
 vim.api.nvim_create_user_command("CleanAndFormat", function()
     -- Guardar la posición actual del cursor
     local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
     -- Eliminar caracteres no deseados como ^M (si existen)
     vim.cmd([[ %s/\r//ge ]])  -- Reemplaza ^M en todo el archivo (el modificador 'e' suprime errores si no se encuentra nada)
+
+    -- Eliminar espacios en blanco antes y después de corchetes
+    vim.cmd([[ %s/\s*{\s*/{/ge ]])  -- Limpia espacios alrededor de llaves {
+    vim.cmd([[ %s/\s*}\s*/}/ge ]])  -- Limpia espacios alrededor de llaves }
+    vim.cmd([[ %s/\s*\[\s*/[/ge ]]) -- Limpia espacios alrededor de corchetes [
+    vim.cmd([[ %s/\s*\]\s*/]/ge ]]) -- Limpia espacios alrededor de corchetes ]
+    vim.cmd([[ %s/\s*(\s*/(/ge ]])  -- Limpia espacios alrededor de paréntesis (
+    vim.cmd([[ %s/\s*)\s*/)/ge ]])  -- Limpia espacios alrededor de paréntesis )
+
+    -- Eliminar espacios después de ;
+    vim.cmd([[ %s/;\s\+/;/ge ]])  -- Reemplaza cualquier cantidad de espacios después de ;
 
     -- Reindentar todo el archivo
     vim.cmd("normal gg=G")   -- Aplica reindentación global

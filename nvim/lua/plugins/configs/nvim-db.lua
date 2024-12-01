@@ -17,6 +17,7 @@ return {
             vim.g.db_ui_save_location = "~/mysql-workspace"
             vim.g.dbs = {
                 test = "mysql://jcarranz@localhost/test",
+                NORTHWIND = "mysql://jcarranz@localhost/NORTHWIND",
             }
 
             -- Agregar los iconos personalizados
