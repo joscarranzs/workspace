@@ -29,8 +29,8 @@ opt.softtabstop = 4             -- Ajusta el comportamiento del tabulador
 opt.smartindent = true          -- Habilita auto-indentación inteligente
 
 -- Configuración de tiempo y rendimiento
-opt.updatetime = 300            -- Reduce el tiempo para actualizaciones (en ms)
-opt.timeoutlen = 500            -- Tiempo de espera para combinaciones de teclas (en ms)
+opt.updatetime = 300            -- Reduce el tiempo para actualizaciones(en ms)
+opt.timeoutlen = 500            -- Tiempo de espera para combinaciones de teclas(en ms)
 
 -- Configuración de ventanas y buffers
 opt.splitright = true           -- Nuevas ventanas verticales se abren a la derecha
@@ -38,27 +38,27 @@ opt.splitbelow = true           -- Nuevas ventanas horizontales se abren abajo
 opt.hidden = true               -- Permite mantener buffers abiertos en segundo plano
 
 -- Configuración de visualización
-opt.laststatus = 3              -- Barra de estado global (mejor para plugins de barra de estado)
+opt.laststatus = 3              -- Barra de estado global(mejor para plugins de barra de estado)
 opt.cmdheight = 1               -- Altura mínima de la línea de comandos
-opt.showmode = false            -- Oculta el modo (útil si usas una barra de estado)
+opt.showmode = false            -- Oculta el modo(útil si usas una barra de estado)
 
 -- Configuración de archivos
 opt.swapfile = false            -- Desactiva los archivos swap
 opt.backup = false              -- Desactiva los backups
 opt.undofile = true             -- Habilita el historial de deshacer persistente
-opt.undodir = vim.fn.stdpath("config") .. "/undo" -- Directorio para archivos de deshacer
+opt.undodir = vim.fn.stdpath("cache").. "/undo" -- Cambiar el directorio de undo a ~/.cache/nvim/undo
 
 -- Configuración de caracteres invisibles
 opt.list = true                 -- Muestra caracteres invisibles
-opt.listchars = { tab = "▸ ", trail = "·", extends = "→", precedes = "←", nbsp = "␣" }
+opt.listchars ={tab = "▸ ", trail = "·", extends = "→", precedes = "←", nbsp = "␣"}
 
--- Configuración adicional (opcional)
-opt.completeopt = { "menu", "menuone", "noselect" } -- Opciones para autocompletado
+-- Configuración adicional(opcional)
+opt.completeopt ={"menu", "menuone", "noselect"}-- Opciones para autocompletado
 opt.foldmethod = "indent"       -- Plegado basado en indentación
 opt.foldlevel = 99              -- Abre todas las líneas por defecto
-opt.iskeyword:append("-")       -- Considera palabras separadas por '-' como una sola
+opt.iskeyword:append("-")-- Considera palabras separadas por '-' como una sola
 
--- Opcional: Habilita símbolos para diagnostic (LSP)
+-- Opcional: Habilita símbolos para diagnostic(LSP)
 vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -66,7 +66,7 @@ vim.diagnostic.config({
 })
 
 -- Configuración del cursor
-vim.opt.guicursor = {
+vim.opt.guicursor ={
     "n-v-c:block", -- Normal, visual y command-line: bloque
     "i-ci-ve:blinkwait100-blinkoff50-blinkon50", -- Insert, insert-completion y visual select: barra vertical
     "r-cr:hor20", -- Replace y command-line replace: subrayado
