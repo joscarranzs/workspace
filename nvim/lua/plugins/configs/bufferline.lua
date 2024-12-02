@@ -5,6 +5,7 @@ return {
     config = function()
         require("bufferline").setup({
             options = {
+
                 numbers = "none", -- Opcional: muestra el número de buffer
                 diagnostics = "nvim_lsp", -- Integra diagnósticos de LSP
                 show_buffer_icons = true, -- Muestra íconos de los buffers

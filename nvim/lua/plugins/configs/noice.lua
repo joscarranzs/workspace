@@ -11,18 +11,30 @@ return {
         },
         config = function()
             -- Configuración del plugin nvim-notify
-            require("notify").setup({
+            require("notify").setup( {
                 timeout = 1000, -- Tiempo de espera para mostrar la notificación
-            })
+                stages = "fade_in_slide_out", -- Efecto de transición de la notificación
+                render = "simple", -- Formato de la notificación
+                background_colour = NONE, -- Color de fondo de la notificación
+                padding = 3, -- Tamaño del espacio alrededor de la notificación
+                border_colour = NONE, -- Color del borde de la notificación
+                icons = {
+                    ERROR = "", -- Icono de error
+                    WARN = "", -- Icono de advertencia
+                    INFO = "", -- Icono de información
+                    DEBUG = "", -- Icono de depuración
+                    TRACE = "✎", -- Icono de traza
+                },
+            } )
 
             -- Configuración principal de noice.nvim
-            require("noice").setup({
+            require("noice").setup( {
                 -- Configuración de la línea de comandos
                 cmdline = {
                     enabled = true, -- Activa la interfaz de línea de comandos mejorada
-                    view = "cmdline_popup", -- Usa una ventana emergente
+                    view = "cmdline_popup", -- Muestra la interfaz de línea de comandos en una ventana emergente
                     format = {
-                        cmdline = { pattern = "^:", icon = "", lang = "vim" }, -- Prefijo para ":" (comandos)
+                        cmdline = { pattern = "^:", icon = "", lang = "vim" }, -- Prefijo para ":"(comandos)
                         search_down = { pattern = "^/", icon = " ", lang = "regex" }, -- Prefijo para búsqueda "/"
                         search_up = { pattern = "^%?", icon = " ", lang = "regex" }, -- Prefijo para búsqueda inversa "?"
                         lua = { pattern = "^:%s*lua%s+", icon = "", lang = "lua" }, -- Prefijo para comandos Lua
@@ -52,7 +64,7 @@ return {
                         view = "mini", -- Usa una ventana pequeña para mostrar progreso
                     },
                     hover = {
-                        enabled = true, -- Habilita "hover" (al pasar el cursor)
+                        enabled = true, -- Habilita "hover"(al pasar el cursor)
                     },
                     signature = {
                         enabled = true, -- Habilita sugerencias de firmas de funciones
@@ -85,7 +97,7 @@ return {
                     command_palette = true, -- Activa una paleta de comandos estilizada
                     long_message_to_split = true, -- Divide mensajes largos en paneles
                 },
-            })
+            } )
         end,
     },
 }

@@ -37,4 +37,8 @@ require("lazy").setup({
     require("plugins.configs.nvim-colorizer"),
     require("plugins.configs.fzf"),
     require("plugins.configs.blank-line"),
+    require("plugins.configs.goto-preview"),
+
+    -- Plugins que no se cargan por defecto
+    require("plugins.disabled.init"),
 })
