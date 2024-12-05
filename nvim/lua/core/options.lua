@@ -48,6 +48,9 @@ opt.backup = false              -- Desactiva los backups
 opt.undofile = true             -- Habilita el historial de deshacer persistente
 opt.undodir = vim.fn.stdpath("cache").. "/undo" -- Cambiar el directorio de undo a ~/.cache/nvim/undo
 
+-- Desactivar la barra de buffers
+vim.opt.showtabline = 0
+
 -- Configuración de caracteres invisibles
 opt.list = true                 -- Muestra caracteres invisibles
 opt.listchars ={tab = "▸ ", trail = "·", extends = "→", precedes = "←", nbsp = "␣"}
@@ -72,3 +75,6 @@ vim.opt.guicursor ={
     "r-cr:hor20", -- Replace y command-line replace: subrayado
     "o:hor50", -- Operator-pending: subrayado
 }
+
+-- Transparencias de ventanas
+vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
