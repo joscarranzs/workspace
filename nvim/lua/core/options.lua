@@ -48,8 +48,8 @@ opt.backup = false              -- Desactiva los backups
 opt.undofile = true             -- Habilita el historial de deshacer persistente
 opt.undodir = vim.fn.stdpath("cache").. "/undo" -- Cambiar el directorio de undo a ~/.cache/nvim/undo
 
--- Desactivar la barra de buffers
-vim.opt.showtabline = 0
+-- Activar la barra de buffers
+vim.opt.showtabline = 2
 
 -- Configuración de caracteres invisibles
 opt.list = true                 -- Muestra caracteres invisibles
@@ -60,6 +60,12 @@ opt.completeopt ={"menu", "menuone", "noselect"}-- Opciones para autocompletado
 opt.foldmethod = "indent"       -- Plegado basado en indentación
 opt.foldlevel = 99              -- Abre todas las líneas por defecto
 opt.iskeyword:append("-")-- Considera palabras separadas por '-' como una sola
+
+-- Resaltar coincidencias de búsqueda
+vim.opt.hlsearch = true    -- Resaltar coincidencias de búsqueda
+vim.opt.incsearch = true   -- Resaltar incrementalmente mientras escribes en la búsqueda
+vim.opt.ignorecase = true  -- Ignorar mayúsculas/minúsculas al buscar
+vim.opt.smartcase = true   -- Respeta mayúsculas si las usas en la búsqueda
 
 -- Opcional: Habilita símbolos para diagnostic(LSP)
 vim.diagnostic.config({

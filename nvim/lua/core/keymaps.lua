@@ -77,16 +77,16 @@ end
 
 -- Asignar las funciones a combinaciones de teclas personalizadas
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>vs",
-    ":lua OpenVerticalSplitWithTelescope()<CR>", -- Llama a la función para split vertical y Telescope
-    {noremap = true, silent = true}-- Configuración: sin mapeos recursivos y silencioso
+"n",
+"<leader>vs",
+":lua OpenVerticalSplitWithTelescope()<CR>", -- Llama a la función para split vertical y Telescope
+{noremap = true, silent = true}-- Configuración: sin mapeos recursivos y silencioso
 )
 vim.api.nvim_set_keymap(
-    "n",
-    "<leader>hs",
-    ":lua OpenHorizontalSplitWithTelescope()<CR>", -- Llama a la función para split horizontal y Telescope
-    {noremap = true, silent = true}-- Configuración: sin mapeos recursivos y silencioso
+"n",
+"<leader>hs",
+":lua OpenHorizontalSplitWithTelescope()<CR>", -- Llama a la función para split horizontal y Telescope
+{noremap = true, silent = true}-- Configuración: sin mapeos recursivos y silencioso
 )
 
 -- Mover ventana hacia la derecha
@@ -116,76 +116,6 @@ vim.keymap.set('v', '<leader>tr', ":'<,'>TranslateR<CR>",{noremap = true, silent
 -- Mapeo para ejecutar ':TranslateW' en el rango visual sin reemplazar el texto seleccionado
 vim.keymap.set('v', '<leader>tw', ":'<,'>TranslateW<CR>",{noremap = true, silent = true, desc = 'Traducir texto seleccionado sin reemplazar'})
 
--- Función para convertir solo el texto seleccionado en CamelCase
-function camel_case_selected_text()
-    local start_pos = vim.fn.getpos("'<")
-    local end_pos = vim.fn.getpos("'>")
-    local line_start, col_start = start_pos[2], start_pos[3]
-    local line_end, col_end = end_pos[2], end_pos[3]
-
-    -- Verifica que haya texto seleccionado
-    if line_start == 0 or line_end == 0 then
-        print("No text selected!")
-        return
-    end
-
-    -- Caso: Selección en una sola línea
-    if line_start == line_end then
-        local line = vim.fn.getline(line_start)-- Obtiene la línea completa
-        local selected_text = line:sub(col_start, col_end)-- Extrae el texto seleccionado
-        local cleaned_text = selected_text:gsub("%s+", " ")-- Elimina espacios extra
-        local camel_cased = cleaned_text:gsub("(%a)", function(letter)
-            return letter:upper()
-        end):gsub("^%l", string.lower)-- Aplica CamelCase
-        -- Reemplaza el texto seleccionado
-        vim.api.nvim_buf_set_text(0, line_start - 1, col_start - 1, line_end - 1, col_end,{camel_cased})
-    else
-        -- Caso: Selección en varias líneas
-        local lines = vim.fn.getline(line_start, line_end)-- Obtiene las líneas seleccionadas
-        lines[1]= lines[1]:sub(col_start)-- Ajusta la primera línea desde col_start
-        lines[#lines]= lines[#lines]:sub(1, col_end)-- Ajusta la última línea hasta col_end
-        local selected_text = table.concat(lines, " ")-- Une las líneas seleccionadas
-        local cleaned_text = selected_text:gsub("%s+", " ")-- Elimina espacios extra
-        local camel_cased = cleaned_text:gsub("(%a)", function(letter)
-            return letter:upper()
-        end):gsub("^%l", string.lower)-- Aplica CamelCase
-        -- Reemplaza las líneas seleccionadas
-        vim.api.nvim_buf_set_text(0, line_start - 1, col_start - 1, line_end - 1, col_end,{camel_cased})
-    end
-end
-
--- Atajo de teclado en modo visual para ejecutar la función
-vim.api.nvim_set_keymap("v", "<leader>cc", ":lua camel_case_selected_text()<CR>",{noremap = true, silent = true})
-
--- Alternativa para cerrar los buffer
-vim.api.nvim_create_user_command(
-    'Q',
-    'bp|bd #',
-    {desc = 'Cerrar el buffer actual sin salir de Neovim'}
-)
-
--- Mapear :q al comando personalizado :Q
-vim.cmd('cabbrev q Q')
-
--- Comando personalizado para cerrar todos los buffers y abrir el Dashboard
-vim.api.nvim_create_user_command(
-    'QA',
-    -- 'bufdo bd' cierra todos los buffers abiertos.
-    -- Luego se ejecuta ':Dashboard' para volver al Dashboard.
-    'bufdo bd | Dashboard',
-    {desc = 'Cerrar todos los buffers y regresar al Dashboard'}-- Descripción del comando
-)
-
--- Mapear el comando ':qa' al nuevo comando ':QA'
--- Esto asegura que cuando escribas ':qa', se ejecute nuestro comando personalizado.
-vim.cmd('cabbrev qa QA')
-
--- Resaltar coincidencias de búsqueda
-vim.opt.hlsearch = true    -- Resaltar coincidencias de búsqueda
-vim.opt.incsearch = true   -- Resaltar incrementalmente mientras escribes en la búsqueda
-vim.opt.ignorecase = true  -- Ignorar mayúsculas/minúsculas al buscar
-vim.opt.smartcase = true   -- Respeta mayúsculas si las usas en la búsqueda
-
 -- Para desactivar el resaltado después de terminar con una búsqueda
 vim.api.nvim_set_keymap('n', '<leader>n', ':nohlsearch<CR>',{noremap = true, silent = true})
 
@@ -193,3 +123,26 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':nohlsearch<CR>',{noremap = true, sil
 vim.cmd([[
 command! ToggleHlsearch set hlsearch!
 ]])
+
+-- Crear un comando personalizado para :Q que cierre solo el buffer actual
+vim.api.nvim_create_user_command('Q', function()
+    -- Obtener buffers válidos y listados
+    local buffers = vim.tbl_filter(function(buf)
+        return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
+    end, vim.api.nvim_list_bufs())
+
+    if #buffers > 1 then
+        -- Si hay más de un buffer, cerrar el buffer actual
+        vim.cmd('bdelete')
+    else
+        -- Si no quedan buffers, intentar abrir Dashboard
+        local ok, _ = pcall(vim.cmd, 'Dashboard')
+        if not ok then
+            -- Si Dashboard no está disponible, abrir un buffer vacío
+            vim.cmd('enew')
+        end
+    end
+end, { nargs = 0 })
+
+-- Redefinir :q para llamar al comando :Q
+vim.api.nvim_set_keymap('c', 'q', 'Q', { noremap = true, silent = true })
